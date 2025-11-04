@@ -3,7 +3,7 @@
 📝 Descrição
 Sistema web completo para gerenciamento acadêmico com foco em análise de algoritmos e estruturas de dados. O projeto permite cadastrar alunos, disciplinas e matrículas, além de oferecer recursos avançados de ranking, busca otimizada e análise estatística de desempenho.
 🎯 Funcionalidades Principais
-1. CRUD Completo
+<h1>1. CRUD Completo</h1>
 
 Cadastro, edição e exclusão de alunos
 Gerenciamento de disciplinas
