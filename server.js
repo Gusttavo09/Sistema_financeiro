@@ -1,18 +1,20 @@
+require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
 
-const app = express;
+const app = express();
 const PORT = 3000;
 
 app.use(cors());
-app.use(express.json);
+app.use(express.json());
 
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'sua_senha',
-    database: 'sistema_academico'
+   port: process.env.DATABSE_PORT,
+   host: process.env.DATABASE_HOST ,
+   user: process.env.DATABASE_USER ,
+   password: process.env.DATABASE_PASS,
+   database: process.env.DATABASE_NAME , 
 });
 
 db.connect((err) => {
@@ -24,6 +26,7 @@ db.connect((err) => {
 });
 
 app.get('/alunos', (req, res) => {
+  console.log('Requisição recebida em /alunos');
     const sql = 'SELECT * FROM alunos';
     db.query(sql, (err, results) => {
         if (err){
@@ -151,6 +154,19 @@ app.put('/matriculas/:id', (req, res) => {
       return res.status(500).json({ erro: err.message });
     }
     res.json({ mensagem: 'Nota atualizada com sucesso!' });
+  });
+});
+
+// Buscar Disciplinas
+app.get('/disciplinas', (req, res) => {
+  const sql = "SELECT * FROM disciplina;"
+
+  db.query(sql, [], (err,result) => {
+    if (err) {
+      console.log(err)
+      return res.status(500).json({ erro: err.message });
+    }
+    res.json(result)
   });
 });
 
