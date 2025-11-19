@@ -1,370 +1,357 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Acadêmico Avançado</title>
     <link rel="stylesheet" href="style.css">
-    <title>Sistema Acadêmico</title>
-    <style>
-       
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
     <div class="container">
-        <h1>📚 Sistema de Gestão Acadêmica</h1>
 
+        <div class="header">
+            <div class="header-left">
+                <h1> Sistema Acadêmico Avançado</h1>
+                <p class="subtitle">Análise de Algoritmos e Estruturas de Dados</p>
+            </div>
+        </div>
+
+        <!-- ALERT -->
         <div id="alert" class="alert"></div>
 
+        <!-- Janelas -->
         <div class="tabs">
-            <button class="tab active" onclick="showTab('alunos')">Alunos</button>
-            <button class="tab" onclick="showTab('disciplinas')">Disciplinas</button>
-            <button class="tab" onclick="showTab('matriculas')">Matrículas</button>
+            <button class="tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
+            <button class="tab" onclick="showTab('crud')">📝 Cadastros</button>
+            <button class="tab" onclick="showTab('ranking')">🏆 Ranking</button>
+            <button class="tab" onclick="showTab('busca')">🔍 Busca</button>
+            <button class="tab" onclick="showTab('estatisticas')">📈 Estatísticas</button>
+            <button class="tab" onclick="showTab('comparacao')">⚡ Comparação</button>
         </div>
 
-        <!-- Tab Alunos -->
-        <div id="alunos" class="tab-content active">
-            <h2>Cadastrar Aluno</h2>
-            <form id="formAluno" class="form-inline">
-                <div class="form-group">
-                    <label>Nome:</label>
-                    <input type="text" id="nomeAluno" required>
-                </div>
-                <div class="form-group">
-                    <label>Idade:</label>
-                    <input type="text" id="idadeAluno" required>
-                </div>
-                <div class="form-group">
-                    <label>Matrícula:</label>
-                    <input type="number" id="matriculaAluno" required>
-                </div>
-                <div class="form-group">
-                    <label>Data de Cadastro:</label>
-                    <input type="date" id="dataCadastroAluno" required>
-                </div>
-                <div class="form-group">
-                    <label>Semestre:</label>
-                    <input type="number" id="semestreAluno" required>
-                </div>
-                <button type="submit">Cadastrar Aluno</button>
-            </form>
+        <!-- Dashboard -->
+        <div id="dashboard" class="tab-content active">
+            <h2>📊 Dashboard Geral</h2>
 
-            <h2>Lista de Alunos</h2>
-            <table id="tabelaAlunos">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Idade</th>
-                        <th>Matrícula</th>
-                        <th>Semestre</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <div class="dashboard-grid" id="dashboardCards">
+                <div class="stat-card">
+                    <div class="icon">👨‍🎓</div>
+                    <div class="stat-value" id="totalAlunos">-</div>
+                    <div class="stat-label">Total de Alunos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">📚</div>
+                    <div class="stat-value" id="totalDisciplinas">-</div>
+                    <div class="stat-label">Disciplinas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">📋</div>
+                    <div class="stat-value" id="totalMatriculas">-</div>
+                    <div class="stat-label">Matrículas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">📊</div>
+                    <div class="stat-value" id="mediaGeral">-</div>
+                    <div class="stat-label">Média Geral</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">✅</div>
+                    <div class="stat-value" id="aprovados">-</div>
+                    <div class="stat-label">Aprovações</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">📈</div>
+                    <div class="stat-value" id="taxaAprovacao">-</div>
+                    <div class="stat-label">Taxa de Aprovação</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="dashboardChart"></canvas>
+            </div>
         </div>
 
-        <!-- Tab Disciplinas -->
-        <div id="disciplinas" class="tab-content">
-            <h2>Cadastrar Disciplina</h2>
-            <form id="formDisciplina" class="form-inline">
-                <div class="form-group">
-                    <label>Nome:</label>
-                    <input type="text" id="nomeDisciplina" required>
-                </div>
-                <div class="form-group">
-                    <label>Curso:</label>
-                    <input type="text" id="cursoDisciplina" required>
-                </div>
-                <div class="form-group">
-                    <label>Código:</label>
-                    <input type="number" id="codigoDisciplina" required>
-                </div>
-                <button type="submit">Cadastrar Disciplina</button>
-            </form>
+        <!-- CRUD -->
+        <div id="crud" class="tab-content">
+            <h2> Cadastros</h2>
 
-            <h2>Lista de Disciplinas</h2>
-            <table id="tabelaDisciplinas">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Curso</th>
-                        <th>Código</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <div class="form-grid">
+                <!-- Alunos -->
+                <div class="form-section">
+                    <h3> Cadastrar Aluno</h3>
+                    <form id="formAluno">
+                        <div class="form-group">
+                            <label>Nome Completo:</label>
+                            <input type="text" id="nomeAluno" required placeholder="Ex: João Silva">
+                        </div>
+                        <div class="form-group">
+                            <label>Idade:</label>
+                            <input type="text" id="idadeAluno" required placeholder="Ex: 20">
+                        </div>
+                        <div class="form-group">
+                            <label>Matrícula:</label>
+                            <input type="number" id="matriculaAluno" required placeholder="Ex: 2024001">
+                        </div>
+                        <div class="form-group">
+                            <label>Curso:</label>
+                            <select id="cursoAluno" required>
+                                <option value="Sistemas de Informação">Sistemas de Informação</option>
+                                <option value="Ciência da Computação">Ciência da Computação</option>
+                                <option value="Engenharia de Software">Engenharia de Software</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Data de Cadastro:</label>
+                            <input type="date" id="dataCadastroAluno" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Semestre:</label>
+                            <input type="number" id="semestreAluno" required min="1" max="10" placeholder="Ex: 3">
+                        </div>
+                        <button type="submit">Cadastrar Aluno</button>
+                    </form>
+                </div>
+
+                <!-- Disciplina -->
+                <div class="form-section">
+                    <h3> Cadastrar Disciplina</h3>
+                    <form id="formDisciplina">
+                        <div class="form-group">
+                            <label>Nome da Disciplina:</label>
+                            <input type="text" id="nomeDisciplina" required placeholder="Ex: Programação Web">
+                        </div>
+                        <div class="form-group">
+                            <label>Curso:</label>
+                            <input type="text" id="cursoDisciplina" required placeholder="Ex: Sistemas de Informação">
+                        </div>
+                        <div class="form-group">
+                            <label>Código:</label>
+                            <input type="number" id="codigoDisciplina" required placeholder="Ex: 101">
+                        </div>
+                        <div class="form-group">
+                            <label>Professor:</label>
+                            <input type="text" id="professorDisciplina" required placeholder="Ex: Prof. Carlos">
+                        </div>
+                        <div class="form-group">
+                            <label>Carga Horária (horas):</label>
+                            <input type="number" id="cargaDisciplina" value="60" placeholder="Ex: 60">
+                        </div>
+                        <button type="submit">Cadastrar Disciplina</button>
+                    </form>
+                </div>
+
+                <!-- Matriculas -->
+                <div class="form-section">
+                    <h3> Realizar Matrícula</h3>
+                    <form id="formMatricula">
+                        <div class="form-group">
+                            <label>Aluno:</label>
+                            <select id="alunoMatricula" required>
+                                <option value="">Selecione um aluno</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Disciplina:</label>
+                            <select id="disciplinaMatricula" required>
+                                <option value="">Selecione uma disciplina</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Peso:</label>
+                            <input type="number" id="pesoMatricula" value="10" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nota:</label>
+                            <input type="number" step="0.1" id="notaMatricula" placeholder="Ex: 8.5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Data:</label>
+                            <input type="date" id="dataMatricula" required>
+                        </div>
+                        <button type="submit">Matricular</button>
+                    </form>
+                </div>
+            </div>
+
+            <h2> Lista de Alunos</h2>
+            <div class="table-container">
+                <table id="tabelaAlunos">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Matrícula</th>
+                            <th>Curso</th>
+                            <th>Semestre</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- Tab Matrículas -->
-        <div id="matriculas" class="tab-content">
-            <h2>Realizar Matrícula</h2>
-            <form id="formMatricula" class="form-inline">
-                <div class="form-group">
-                    <label>Aluno:</label>
-                    <select id="alunoMatricula" required></select>
-                </div>
-                <div class="form-group">
-                    <label>Disciplina:</label>
-                    <select id="disciplinaMatricula" required></select>
-                </div>
-                <div class="form-group">
-                    <label>Peso:</label>
-                    <input type="number" id="pesoMatricula" value="10" required>
-                </div>
-                <div class="form-group">
-                    <label>Nota:</label>
-                    <input type="number" step="0.1" id="notaMatricula" required>
-                </div>
-                <div class="form-group">
-                    <label>Data:</label>
-                    <input type="date" id="dataMatricula" required>
-                </div>
-                <button type="submit">Matricular</button>
-            </form>
+        <!-- Ranking -->
+        <div id="ranking" class="tab-content">
+            <h2> Ranking de Alunos por Média</h2>
 
-            <h2>Lista de Matrículas</h2>
-            <table id="tabelaMatriculas">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Aluno</th>
-                        <th>Disciplina</th>
-                        <th>Nota</th>
-                        <th>Peso</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <div class="algorithm-selector">
+                <button class="algorithm-btn" onclick="carregarRanking('quicksort')">
+                    QuickSort
+                    <span class="complexity-badge">O(n log n)</span>
+                </button>
+                <button class="algorithm-btn" onclick="carregarRanking('mergesort')">
+                    MergeSort
+                    <span class="complexity-badge">O(n log n)</span>
+                </button>
+                <button class="algorithm-btn" onclick="carregarRanking('heapsort')">
+                    HeapSort
+                    <span class="complexity-badge">O(n log n)</span>
+                </button>
+            </div>
+
+            <div id="infoBox" class="info-box" style="display: none;"></div>
+
+            <div id="loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Carregando ranking...</p>
+            </div>
+
+            <div id="podium" class="podium-container" style="display: none;">
+
+                <!-- 1º LUGAR -->
+                <div class="podium-place first">
+                    <div class="winner-card">
+                        <div class="trophy">🏆</div>
+                        <div class="position">1º LUGAR</div>
+                        <div class="student-name" id="first-name">-</div>
+                        <div class="student-score" id="first-score">-</div>
+                        <div class="student-info">
+                            Matrícula: <span id="first-mat">-</span><br>
+                            Disciplinas: <span id="first-disc">-</span>
+                        </div>
+                    </div>
+                    <div class="podium-base">
+                        <div class="base-number">1</div>
+                    </div>
+                </div>
+
+
+
+                <!-- 2º LUGAR -->
+                <div class="podium-place second">
+                    <div class="winner-card">
+                        <div class="trophy">🥈</div>
+                        <div class="position">2º LUGAR</div>
+                        <div class="student-name" id="second-name">-</div>
+                        <div class="student-score" id="second-score">-</div>
+                        <div class="student-info">
+                            Matrícula: <span id="second-mat">-</span><br>
+                            Disciplinas: <span id="second-disc">-</span>
+                        </div>
+                    </div>
+                    <div class="podium-base">
+                        <div class="base-number">2</div>
+                    </div>
+                </div>
+
+
+
+                <!-- 3º LUGAR -->
+                <div class="podium-place third">
+                    <div class="winner-card">
+                        <div class="trophy">🥉</div>
+                        <div class="position">3º LUGAR</div>
+                        <div class="student-name" id="third-name">-</div>
+                        <div class="student-score" id="third-score">-</div>
+                        <div class="student-info">
+                            Matrícula: <span id="third-mat">-</span><br>
+                            Disciplinas: <span id="third-disc">-</span>
+                        </div>
+                    </div>
+                    <div class="podium-base">
+                        <div class="base-number">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="rankingTable" class="table-container" style="display: none;">
+                <h2> Ranking Completo</h2>
+                <table id="tabelaRanking">
+                    <thead>
+                        <tr>
+                            <th>Posição</th>
+                            <th>Nome</th>
+                            <th>Matrícula</th>
+                            <th>Média</th>
+                            <th>Disciplinas</th>
+                            <th>Progresso</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div id="busca" class="tab-content">
+            <h2> Busca de Alunos</h2>
+
+            <div class="search-box">
+                <div class="form-group">
+                    <label>Tipo de Busca:</label>
+                    <select id="tipoBusca">
+                        <option value="binaria">Busca Binária (por matrícula) - O(log n)</option>
+                        <option value="linear">Busca Linear (por matrícula) - O(n)</option>
+                        <option value="nome">Busca por Nome - O(n)</option>
+                        <option value="hash">Hash Table - O(1)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Valor:</label>
+                    <input type="text" id="valorBusca" placeholder="Digite matrícula ou nome">
+                </div>
+
+                <button onclick="realizarBusca()">Buscar</button>
+            </div>
+
+            <div id="resultadoBusca" class="search-results" style="display: none;"></div>
+        </div>
+
+        <!-- Estatisticas -->
+        <div id="estatisticas" class="tab-content">
+            <h2> Análise Estatística</h2>
+
+            <button onclick="carregarEstatisticas()">Calcular Estatísticas Gerais</button>
+
+            <div id="statsCards" class="dashboard-grid"></div>
+
+            <div class="chart-container">
+                <canvas id="graficoNotas"></canvas>
+            </div>
+        </div>
+
+        <!-- Comparar os resultados-->
+        <div id="comparacao" class="tab-content">
+            <h2> Comparação de Algoritmos</h2>
+
+            <p>Compare o desempenho dos diferentes algoritmos de ordenação em tempo real.</p>
+
+            <button onclick="compararAlgoritmos()">Executar Comparação</button>
+
+            <div id="resultadoComparacao" style="margin-top: 20px;"></div>
+
+            <div class="chart-container">
+                <canvas id="graficoComparacao"></canvas>
+            </div>
         </div>
     </div>
 
-    <!--Passar para outro arquivo js-->
-    <script>
-        const API_URL = 'http://localhost:3000';
-
-        function showTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
-
-            if (tabName === 'alunos') carregarAlunos();
-            if (tabName === 'disciplinas') carregarDisciplinas();
-            if (tabName === 'matriculas') {
-                carregarMatriculas();
-                carregarSelectAlunos();
-                carregarSelectDisciplinas();
-            }
-        }
-
-        function showAlert(message, type) {
-            const alert = document.getElementById('alert');
-            alert.textContent = message;
-            alert.className = `alert ${type} show`;
-            setTimeout(() => alert.classList.remove('show'), 3000);
-        }
-
-        // ALUNOS
-        document.getElementById('formAluno').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const aluno = {
-                nome: document.getElementById('nomeAluno').value,
-                idade: document.getElementById('idadeAluno').value,
-                matricula: document.getElementById('matriculaAluno').value,
-                data_cadastro: document.getElementById('dataCadastroAluno').value,
-                semestre: document.getElementById('semestreAluno').value
-            };
-
-            try {
-                const response = await fetch(`${API_URL}/alunos`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(aluno)
-                });
-
-                if (response.ok) {
-                    showAlert('Aluno cadastrado com sucesso!', 'success');
-                    e.target.reset();
-                    carregarAlunos();
-                } else {
-                    showAlert('Erro ao cadastrar aluno', 'error');
-                }
-            } catch (error) {
-                showAlert('Erro de conexão com o servidor', 'error');
-            }
-        });
-
-        async function carregarAlunos() {
-            try {
-                const response = await fetch(`${API_URL}/alunos`);
-                const alunos = await response.json();
-                
-                const tbody = document.querySelector('#tabelaAlunos tbody');
-                tbody.innerHTML = alunos.map(a => `
-                    <tr>
-                        <td>${a.id}</td>
-                        <td>${a.nome}</td>
-                        <td>${a.idade}</td>
-                        <td>${a.matricula}</td>
-                        <td>${a.semestre}</td>
-                        <td class="actions">
-                            <button class="btn-small btn-danger" onclick="deletarAluno(${a.id})">Excluir</button>
-                        </td>
-                    </tr>
-                `).join('');
-            } catch (error) {
-                console.error('Erro ao carregar alunos:', error);
-            }
-        }
-
-        async function deletarAluno(id) {
-            if (!confirm('Deseja realmente excluir este aluno?')) return;
-            
-            try {
-                const response = await fetch(`${API_URL}/alunos/${id}`, {
-                    method: 'DELETE'
-                });
-
-                if (response.ok) {
-                    showAlert('Aluno excluído com sucesso!', 'success');
-                    carregarAlunos();
-                }
-            } catch (error) {
-                showAlert('Erro ao excluir aluno', 'error');
-            }
-        }
-
-        // DISCIPLINAS
-        document.getElementById('formDisciplina').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const disciplina = {
-                nome: document.getElementById('nomeDisciplina').value,
-                curso: document.getElementById('cursoDisciplina').value,
-                codigo: document.getElementById('codigoDisciplina').value
-            };
-
-            try {
-                const response = await fetch(`${API_URL}/disciplinas`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(disciplina)
-                });
-
-                if (response.ok) {
-                    showAlert('Disciplina cadastrada com sucesso!', 'success');
-                    e.target.reset();
-                    carregarDisciplinas();
-                }
-            } catch (error) {
-                showAlert('Erro ao cadastrar disciplina', 'error');
-            }
-        });
-
-        async function carregarDisciplinas() {
-            try {
-                const response = await fetch(`${API_URL}/disciplinas`);
-                const disciplinas = await response.json();
-                
-                const tbody = document.querySelector('#tabelaDisciplinas tbody');
-                tbody.innerHTML = disciplinas.map(d => `
-                    <tr>
-                        <td>${d.id}</td>
-                        <td>${d.nome}</td>
-                        <td>${d.curso}</td>
-                        <td>${d.codigo}</td>
-                    </tr>
-                `).join('');
-            } catch (error) {
-                console.error('Erro ao carregar disciplinas:', error);
-            }
-        }
-
-        // MATRÍCULAS
-        async function carregarSelectAlunos() {
-            try {
-                const response = await fetch(`${API_URL}/alunos`);
-                const alunos = await response.json();
-                
-                const select = document.getElementById('alunoMatricula');
-                select.innerHTML = '<option value="">Selecione um aluno</option>' +
-                    alunos.map(a => `<option value="${a.id}">${a.nome}</option>`).join('');
-            } catch (error) {
-                console.error('Erro ao carregar alunos:', error);
-            }
-        }
-
-        async function carregarSelectDisciplinas() {
-            try {
-                const response = await fetch(`${API_URL}/disciplinas`);
-                const disciplinas = await response.json();
-                
-                const select = document.getElementById('disciplinaMatricula');
-                select.innerHTML = '<option value="">Selecione uma disciplina</option>' +
-                    disciplinas.map(d => `<option value="${d.id}">${d.nome}</option>`).join('');
-            } catch (error) {
-                console.error('Erro ao carregar disciplinas:', error);
-            }
-        }
-
-        document.getElementById('formMatricula').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const matricula = {
-                aluno_id: document.getElementById('alunoMatricula').value,
-                disciplina_id: document.getElementById('disciplinaMatricula').value,
-                peso: document.getElementById('pesoMatricula').value,
-                nota: document.getElementById('notaMatricula').value,
-                data_cadastro: document.getElementById('dataMatricula').value
-            };
-
-            try {
-                const response = await fetch(`${API_URL}/matriculas`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(matricula)
-                });
-
-                if (response.ok) {
-                    showAlert('Matrícula realizada com sucesso!', 'success');
-                    e.target.reset();
-                    carregarMatriculas();
-                }
-            } catch (error) {
-                showAlert('Erro ao realizar matrícula', 'error');
-            }
-        });
-
-        async function carregarMatriculas() {
-            try {
-                const response = await fetch(`${API_URL}/matriculas`);
-                const matriculas = await response.json();
-                
-                const tbody = document.querySelector('#tabelaMatriculas tbody');
-                tbody.innerHTML = matriculas.map(m => `
-                    <tr>
-                        <td>${m.id}</td>
-                        <td>${m.nome_aluno}</td>
-                        <td>${m.nome_disciplina}</td>
-                        <td>${m.nota}</td>
-                        <td>${m.peso}</td>
-                    </tr>
-                `).join('');
-            } catch (error) {
-                console.error('Erro ao carregar matrículas:', error);
-            }
-        }
-
-        // Carregar dados iniciais
-        carregarAlunos();
-    </script>
+    <script src="script.js"></script>
 </body>
+
 </html>
