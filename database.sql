@@ -6,12 +6,13 @@ USE sistema_academico;
 CREATE TABLE alunos (
   id INT PRIMARY KEY AUTO_INCREMENT,
   nome VARCHAR
-(255) NOT NULL,
+  (255) NOT NULL,
   idade VARCHAR
-(255),
+  (255),
   matricula INT,
   data_cadastro DATE,
-  semestre INT
+  semestre INT,
+  curso VARCHAR
 );
 
 -- Tabela de Disciplinas
@@ -21,7 +22,9 @@ CREATE TABLE disciplina (
 (255) NOT NULL,
   curso VARCHAR
 (255),
-  codigo INT
+  codigo INT,
+  professor VARCHAR,
+  carga_horaria INT
 );
 
 -- Tabela de Matrículas 

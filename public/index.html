@@ -2,356 +2,232 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Acadêmico Avançado</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Controle Financeiro - Simples</title>
+	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="container">
+	<header class="site-header">
+		<div class="container header-inner">
+			<h1 class="logo">Controle Financeiro</h1>
+			<div class="header-actions">
+				<button id="themeToggle" class="btn icon-btn">🌙</button>
+			</div>
+		</div>
+	</header>
 
-        <div class="header">
-            <div class="header-left">
-                <h1> Sistema Acadêmico Avançado</h1>
-                <p class="subtitle">Análise de Algoritmos e Estruturas de Dados</p>
-            </div>
-        </div>
+	<main class="container">
 
-        <!-- ALERT -->
-        <div id="alert" class="alert"></div>
+		<!-- Metrics dashboard -->
+		<section class="panel metrics-panel">
+			<div class="metrics-grid">
+				<div class="metric-card">
+					<h3>Balanço</h3>
+					<div class="balance-row">
+						<div>
+							<span class="muted">Entradas</span>
+							<div class="balance-value" id="bal-entradas">R$ 0,00</div>
+						</div>
+						<div>
+							<span class="muted">Saídas</span>
+							<div class="balance-value" id="bal-saidas">R$ 0,00</div>
+						</div>
+					</div>
+					<div class="saldo">
+						<span class="muted">Saldo</span>
+						<div class="saldo-value" id="bal-saldo">R$ 0,00</div>
+					</div>
+				</div>
 
-        <!-- Janelas -->
-        <div class="tabs">
-            <button class="tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
-            <button class="tab" onclick="showTab('crud')">📝 Cadastros</button>
-            <button class="tab" onclick="showTab('ranking')">🏆 Ranking</button>
-            <button class="tab" onclick="showTab('busca')">🔍 Busca</button>
-            <button class="tab" onclick="showTab('estatisticas')">📈 Estatísticas</button>
-            <button class="tab" onclick="showTab('comparacao')">⚡ Comparação</button>
-        </div>
+				<div class="metric-card">
+					<h3>Gastos por categoria</h3>
+					<div class="category-list" id="categoryList">
+						<!-- categorias padrão baseadas no enum -->
+						<div class="category-item">
+							<div class="cat-info"><strong>Receitas</strong><span>R$ 0,00</span></div>
+							<div class="cat-bar"><div class="bar-fill" style="width:2%"></div></div>
+						</div>
+						<div class="category-item">
+							<div class="cat-info"><strong>Saúde</strong><span>R$ 0,00</span></div>
+							<div class="cat-bar"><div class="bar-fill" style="width:2%"></div></div>
+						</div>
+						<div class="category-item">
+							<div class="cat-info"><strong>Lazer</strong><span>R$ 0,00</span></div>
+							<div class="cat-bar"><div class="bar-fill" style="width:2%"></div></div>
+						</div>
+						<div class="category-item">
+							<div class="cat-info"><strong>Mercado</strong><span>R$ 0,00</span></div>
+							<div class="cat-bar"><div class="bar-fill" style="width:2%"></div></div>
+						</div>
+						<div class="category-item">
+							<div class="cat-info"><strong>Outros</strong><span>R$ 0,00</span></div>
+							<div class="cat-bar"><div class="bar-fill" style="width:2%"></div></div>
+						</div>
+						<div class="category-item">
+							<div class="cat-info"><strong>Transporte</strong><span>R$ 0,00</span></div>
+							<div class="cat-bar"><div class="bar-fill" style="width:2%"></div></div>
+						</div>
+						<div class="category-item">
+							<div class="cat-info"><strong>Casa</strong><span>R$ 0,00</span></div>
+							<div class="cat-bar"><div class="bar-fill" style="width:2%"></div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 
-        <!-- Dashboard -->
-        <div id="dashboard" class="tab-content active">
-            <h2>📊 Dashboard Geral</h2>
+		<div class="main-grid">
+			<section class="panel form-panel">
+			<h2>Nova Transação</h2>
 
-            <div class="dashboard-grid" id="dashboardCards">
-                <div class="stat-card">
-                    <div class="icon">👨‍🎓</div>
-                    <div class="stat-value" id="totalAlunos">-</div>
-                    <div class="stat-label">Total de Alunos</div>
-                </div>
-                <div class="stat-card">
-                    <div class="icon">📚</div>
-                    <div class="stat-value" id="totalDisciplinas">-</div>
-                    <div class="stat-label">Disciplinas</div>
-                </div>
-                <div class="stat-card">
-                    <div class="icon">📋</div>
-                    <div class="stat-value" id="totalMatriculas">-</div>
-                    <div class="stat-label">Matrículas</div>
-                </div>
-                <div class="stat-card">
-                    <div class="icon">📊</div>
-                    <div class="stat-value" id="mediaGeral">-</div>
-                    <div class="stat-label">Média Geral</div>
-                </div>
-                <div class="stat-card">
-                    <div class="icon">✅</div>
-                    <div class="stat-value" id="aprovados">-</div>
-                    <div class="stat-label">Aprovações</div>
-                </div>
-                <div class="stat-card">
-                    <div class="icon">📈</div>
-                    <div class="stat-value" id="taxaAprovacao">-</div>
-                    <div class="stat-label">Taxa de Aprovação</div>
-                </div>
-            </div>
+			<div id="alert" class="alert" role="status" aria-live="polite"></div>
 
-            <div class="chart-container">
-                <canvas id="dashboardChart"></canvas>
-            </div>
-        </div>
+			<form id="formTransacao">
+				<div class="form-row">
+					<label for="descricao">Descrição</label>
+					<input type="text" id="descricao" name="descricao" required>
+				</div>
 
-        <!-- CRUD -->
-        <div id="crud" class="tab-content">
-            <h2> Cadastros</h2>
+				<div class="form-row form-split">
+					<div>
+						<label for="tipo">Tipo</label>
+						<select id="tipo" name="tipo" required>
+							<option value="entrada">Entrada</option>
+							<option value="saida">Saída</option>
+						</select>
+					</div>
+					<div>
+						<label for="categoria">Categoria</label>
+						<select id="categoria" name="categoria" required>
+							<option value="receitas">Receitas</option>
+							<option value="saude">Saúde</option>
+							<option value="lazer">Lazer</option>
+							<option value="mercado">Mercado</option>
+							<option value="outros">Outros</option>
+							<option value="transporte">Transporte</option>
+							<option value="casa">Casa</option>
+						</select>
+					</div>
+				</div>
 
-            <div class="form-grid">
-                <!-- Alunos -->
-                <div class="form-section">
-                    <h3> Cadastrar Aluno</h3>
-                    <form id="formAluno">
-                        <div class="form-group">
-                            <label>Nome Completo:</label>
-                            <input type="text" id="nomeAluno" required placeholder="Ex: João Silva">
-                        </div>
-                        <div class="form-group">
-                            <label>Idade:</label>
-                            <input type="text" id="idadeAluno" required placeholder="Ex: 20">
-                        </div>
-                        <div class="form-group">
-                            <label>Matrícula:</label>
-                            <input type="number" id="matriculaAluno" required placeholder="Ex: 2024001">
-                        </div>
-                        <div class="form-group">
-                            <label>Curso:</label>
-                            <select id="cursoAluno" required>
-                                <option value="Sistemas de Informação">Sistemas de Informação</option>
-                                <option value="Ciência da Computação">Ciência da Computação</option>
-                                <option value="Engenharia de Software">Engenharia de Software</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Data de Cadastro:</label>
-                            <input type="date" id="dataCadastroAluno" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Semestre:</label>
-                            <input type="number" id="semestreAluno" required min="1" max="10" placeholder="Ex: 3">
-                        </div>
-                        <button type="submit">Cadastrar Aluno</button>
-                    </form>
-                </div>
+				<div class="form-row form-split">
+					<div>
+						<label for="valor">Valor (R$)</label>
+						<input type="number" id="valor" name="valor" step="0.01" required>
+					</div>
+					<div>
+						<label for="data">Data</label>
+						<input type="date" id="data" name="data" required>
+					</div>
+				</div>
 
-                <!-- Disciplina -->
-                <div class="form-section">
-                    <h3> Cadastrar Disciplina</h3>
-                    <form id="formDisciplina">
-                        <div class="form-group">
-                            <label>Nome da Disciplina:</label>
-                            <input type="text" id="nomeDisciplina" required placeholder="Ex: Programação Web">
-                        </div>
-                        <div class="form-group">
-                            <label>Curso:</label>
-                            <input type="text" id="cursoDisciplina" required placeholder="Ex: Sistemas de Informação">
-                        </div>
-                        <div class="form-group">
-                            <label>Código:</label>
-                            <input type="number" id="codigoDisciplina" required placeholder="Ex: 101">
-                        </div>
-                        <div class="form-group">
-                            <label>Professor:</label>
-                            <input type="text" id="professorDisciplina" required placeholder="Ex: Prof. Carlos">
-                        </div>
-                        <div class="form-group">
-                            <label>Carga Horária (horas):</label>
-                            <input type="number" id="cargaDisciplina" value="60" placeholder="Ex: 60">
-                        </div>
-                        <button type="submit">Cadastrar Disciplina</button>
-                    </form>
-                </div>
+				<div class="form-row form-actions">
+					<button type="submit" class="btn btn-primary">Adicionar</button>
+					<button type="button" id="resetForm" class="btn btn-ghost">Limpar</button>
+				</div>
+			</form>
+		</section>
 
-                <!-- Matriculas -->
-                <div class="form-section">
-                    <h3> Realizar Matrícula</h3>
-                    <form id="formMatricula">
-                        <div class="form-group">
-                            <label>Aluno:</label>
-                            <select id="alunoMatricula" required>
-                                <option value="">Selecione um aluno</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Disciplina:</label>
-                            <select id="disciplinaMatricula" required>
-                                <option value="">Selecione uma disciplina</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Peso:</label>
-                            <input type="number" id="pesoMatricula" value="10" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Nota:</label>
-                            <input type="number" step="0.1" id="notaMatricula" placeholder="Ex: 8.5" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Data:</label>
-                            <input type="date" id="dataMatricula" required>
-                        </div>
-                        <button type="submit">Matricular</button>
-                    </form>
-                </div>
-            </div>
+		<section class="panel list-panel">
+			<div class="list-controls">
+				<div class="left-controls">
+					<input id="search" type="search" placeholder="Pesquisar por descrição...">
+				</div>
 
-            <h2> Lista de Alunos</h2>
-            <div class="table-container">
-                <table id="tabelaAlunos">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Matrícula</th>
-                            <th>Curso</th>
-                            <th>Semestre</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
+				<div class="right-controls">
+					<label>Ordenar:</label>
+					<select id="sortBy">
+						<option value="biggerValue">Valor: Maior → Menor</option>
+						<option value="lowerValue">Valor: Menor → Maior</option>
+						<option value="newestDate">Data: Mais recentes</option>
+						<option value="oldestDate">Data: Mais antigas</option>
+					</select>
 
-        <!-- Ranking -->
-        <div id="ranking" class="tab-content">
-            <h2> Ranking de Alunos por Média</h2>
+					<label>Por página:</label>
+					<select id="pageSize">
+						<option value="5">5</option>
+						<option value="10" selected>10</option>
+						<option value="20">20</option>
+					</select>
+				</div>
+			</div>
 
-            <div class="algorithm-selector">
-                <button class="algorithm-btn" onclick="carregarRanking('quicksort')">
-                    QuickSort
-                    <span class="complexity-badge">O(n log n)</span>
-                </button>
-                <button class="algorithm-btn" onclick="carregarRanking('mergesort')">
-                    MergeSort
-                    <span class="complexity-badge">O(n log n)</span>
-                </button>
-                <button class="algorithm-btn" onclick="carregarRanking('heapsort')">
-                    HeapSort
-                    <span class="complexity-badge">O(n log n)</span>
-                </button>
-            </div>
+			<div class="table-wrap">
+				<table id="transacoesTable">
+					<thead>
+						<tr>
+							<th>Descrição</th>
+							<th>Tipo</th>
+							<th>Categoria</th>
+							<th>Valor</th>
+							<th>Data</th>
+							<th style="width:140px">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- linhas serão inseridas via JS -->
+					</tbody>
+				</table>
+			</div>
 
-            <div id="infoBox" class="info-box" style="display: none;"></div>
+			<div class="pagination" id="pagination"></div>
+		</section>
+			</div> <!-- .main-grid -->
+	</main>
 
-            <div id="loading" class="loading" style="display: none;">
-                <div class="spinner"></div>
-                <p>Carregando ranking...</p>
-            </div>
+	<!-- Edit modal -->
+	<div id="modal" class="modal hidden">
+		<div class="modal-content">
+			<h3>Editar Transação</h3>
+			<form id="formEdit">
+				<input type="hidden" id="editId">
+				<div class="form-row">
+					<label for="editDescricao">Descrição</label>
+					<input type="text" id="editDescricao" required>
+				</div>
+				<div class="form-row form-split">
+					<div>
+						<label for="editTipo">Tipo</label>
+						<select id="editTipo" required>
+							<option value="entrada">Entrada</option>
+							<option value="saida">Saída</option>
+						</select>
+					</div>
+					<div>
+						<label for="editCategoria">Categoria</label>
+							<select id="editCategoria" required>
+								<option value="receitas">Receitas</option>
+								<option value="saude">Saúde</option>
+								<option value="lazer">Lazer</option>
+								<option value="mercado">Mercado</option>
+								<option value="outros">Outros</option>
+								<option value="transporte">Transporte</option>
+								<option value="casa">Casa</option>
+							</select>
+					</div>
+				</div>
+				<div class="form-row form-split">
+					<div>
+						<label for="editValor">Valor (R$)</label>
+						<input type="number" id="editValor" step="0.01" required>
+					</div>
+					<div>
+						<label for="editData">Data</label>
+						<input type="date" id="editData" required>
+					</div>
+				</div>
+				<div class="form-row form-actions">
+					<button type="submit" class="btn btn-primary">Salvar</button>
+					<button type="button" id="closeModal" class="btn btn-ghost">Cancelar</button>
+				</div>
+			</form>
+		</div>
+	</div>
 
-            <div id="podium" class="podium-container" style="display: none;">
-
-                <!-- 1º LUGAR -->
-                <div class="podium-place first">
-                    <div class="winner-card">
-                        <div class="trophy">🏆</div>
-                        <div class="position">1º LUGAR</div>
-                        <div class="student-name" id="first-name">-</div>
-                        <div class="student-score" id="first-score">-</div>
-                        <div class="student-info">
-                            Matrícula: <span id="first-mat">-</span><br>
-                            Disciplinas: <span id="first-disc">-</span>
-                        </div>
-                    </div>
-                    <div class="podium-base">
-                        <div class="base-number">1</div>
-                    </div>
-                </div>
-
-
-
-                <!-- 2º LUGAR -->
-                <div class="podium-place second">
-                    <div class="winner-card">
-                        <div class="trophy">🥈</div>
-                        <div class="position">2º LUGAR</div>
-                        <div class="student-name" id="second-name">-</div>
-                        <div class="student-score" id="second-score">-</div>
-                        <div class="student-info">
-                            Matrícula: <span id="second-mat">-</span><br>
-                            Disciplinas: <span id="second-disc">-</span>
-                        </div>
-                    </div>
-                    <div class="podium-base">
-                        <div class="base-number">2</div>
-                    </div>
-                </div>
-
-
-
-                <!-- 3º LUGAR -->
-                <div class="podium-place third">
-                    <div class="winner-card">
-                        <div class="trophy">🥉</div>
-                        <div class="position">3º LUGAR</div>
-                        <div class="student-name" id="third-name">-</div>
-                        <div class="student-score" id="third-score">-</div>
-                        <div class="student-info">
-                            Matrícula: <span id="third-mat">-</span><br>
-                            Disciplinas: <span id="third-disc">-</span>
-                        </div>
-                    </div>
-                    <div class="podium-base">
-                        <div class="base-number">3</div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="rankingTable" class="table-container" style="display: none;">
-                <h2> Ranking Completo</h2>
-                <table id="tabelaRanking">
-                    <thead>
-                        <tr>
-                            <th>Posição</th>
-                            <th>Nome</th>
-                            <th>Matrícula</th>
-                            <th>Média</th>
-                            <th>Disciplinas</th>
-                            <th>Progresso</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Search -->
-        <div id="busca" class="tab-content">
-            <h2> Busca de Alunos</h2>
-
-            <div class="search-box">
-                <div class="form-group">
-                    <label>Tipo de Busca:</label>
-                    <select id="tipoBusca">
-                        <option value="binaria">Busca Binária (por matrícula) - O(log n)</option>
-                        <option value="linear">Busca Linear (por matrícula) - O(n)</option>
-                        <option value="nome">Busca por Nome - O(n)</option>
-                        <option value="hash">Hash Table - O(1)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Valor:</label>
-                    <input type="text" id="valorBusca" placeholder="Digite matrícula ou nome">
-                </div>
-
-                <button onclick="realizarBusca()">Buscar</button>
-            </div>
-
-            <div id="resultadoBusca" class="search-results" style="display: none;"></div>
-        </div>
-
-        <!-- Estatisticas -->
-        <div id="estatisticas" class="tab-content">
-            <h2> Análise Estatística</h2>
-
-            <button onclick="carregarEstatisticas()">Calcular Estatísticas Gerais</button>
-
-            <div id="statsCards" class="dashboard-grid"></div>
-
-            <div class="chart-container">
-                <canvas id="graficoNotas"></canvas>
-            </div>
-        </div>
-
-        <!-- Comparar os resultados-->
-        <div id="comparacao" class="tab-content">
-            <h2> Comparação de Algoritmos</h2>
-
-            <p>Compare o desempenho dos diferentes algoritmos de ordenação em tempo real.</p>
-
-            <button onclick="compararAlgoritmos()">Executar Comparação</button>
-
-            <div id="resultadoComparacao" style="margin-top: 20px;"></div>
-
-            <div class="chart-container">
-                <canvas id="graficoComparacao"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+	<script src="script.js"></script>
 </body>
 
 </html>
+
