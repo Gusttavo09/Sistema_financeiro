@@ -165,33 +165,45 @@ document.getElementById('formEdit').addEventListener('submit', async (e)=>{
   }catch(err){console.error(err); showAlert('Erro ao atualizar','error')}
 });
 
-// Search behavior: input filters client-side; Enter tries server search
-document.getElementById('search').addEventListener('input', ()=>{ currentPage =1; renderTable(); });
+// Search behavior: use server-side search (debounced) with client-side fallback
+let _searchDebounceTimer = null;
+async function performServerSearch(q){
+  if(!q) return fetchTransacoes(document.getElementById('sortBy').value);
+  try{
+    const res = await fetch(`${API}/transacoes/busca/${encodeURIComponent(q)}`);
+    if(!res.ok) throw new Error('Busca falhou');
+    const json = await res.json();
+    const data = json.data;
+    const results = Array.isArray(data) ? data : (data ? [data] : []);
+    allTransacoes = results;
+    currentPage = 1;
+    renderTable();
+    updateMetrics();
+    showAlert(`Busca concluída (${json.tempoExecucao || '—'})`,'success');
+  }catch(err){
+    console.error(err);
+    showAlert('Busca por servidor falhou — usando filtro local','error');
+    // fallback to client-side filtering
+    currentPage = 1;
+    renderTable();
+  }
+}
+
+// Debounced input: call server after short pause while typing
+document.getElementById('search').addEventListener('input', (e)=>{
+  const q = e.target.value.trim();
+  currentPage = 1;
+  clearTimeout(_searchDebounceTimer);
+  _searchDebounceTimer = setTimeout(()=> performServerSearch(q), 350);
+});
+
+// Enter key triggers immediate server search (no debounce)
 document.getElementById('search').addEventListener('keydown', async (e)=>{
   if(e.key === 'Enter'){
     e.preventDefault();
+    clearTimeout(_searchDebounceTimer);
     const q = document.getElementById('search').value.trim();
-    if(!q) return fetchTransacoes(document.getElementById('sortBy').value);
-    try{
-      const res = await fetch(`${API}/transacoes/busca/${encodeURIComponent(q)}`);
-      if(!res.ok) throw new Error('Busca falhou');
-      const json = await res.json();
-      // server returns { data: resultado, tempoExecucao }
-      const data = json.data;
-      if(!data) return showAlert('Nenhum resultado encontrado','error');
-      // normalize to array
-      const results = Array.isArray(data) ? data : [data];
-      allTransacoes = results;
-      currentPage = 1;
-      renderTable();
-      updateMetrics();
-      showAlert(`Busca concluída (${json.tempoExecucao || '—'})`,'success');
-    }catch(err){
-      console.error(err);
-      showAlert('Busca por servidor falhou — usando filtro local','error');
-      // fallback: client-side filter (already applied by renderTable)
-      renderTable();
-    }
+    await performServerSearch(q);
   }
 });
 

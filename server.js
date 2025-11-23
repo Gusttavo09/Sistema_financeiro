@@ -53,11 +53,13 @@ function quickSortValor(arr, orderBy) {
     // console.log(pivot, left, right)
     if (orderBy === 'biggerValue') {
       console.log("aqui no big")
-      if (arr[i].valor > pivot.valor) left.push(arr[i]);
+      console.log(`linha: ${i} valor: ${arr[i].valor}, left:${JSON.stringify(left.map((item) => item.valor))},  pivot: ${pivot.valor}, right:${JSON.stringify(right.map((item) => item.valor))}`)
+      if (Number(arr[i].valor) > Number(pivot.valor)) left.push(arr[i]);
       else right.push(arr[i]);
     } else if (orderBy === 'lowerValue') {
       console.log("aqui no low")
-      if (arr[i].valor < pivot.valor) left.push(arr[i]);
+      console.log(`linha: ${i} valor: ${arr[i].valor}, left:${JSON.stringify(left.map((item) => item.valor))},  pivot: ${pivot.valor}, right:${JSON.stringify(right.map((item) => item.valor))}`)
+      if (Number(arr[i].valor) < Number(pivot.valor)) left.push(arr[i]);
       else right.push(arr[i]);
     } else if (orderBy === 'newestDate') {
       console.log("aqui no new")
@@ -185,15 +187,15 @@ Busca Linear
  */
 function linearSearch(arr, target, key = 'descricao') {
   let comparisons = 0;
-
+  const result = []
   for (let item of arr) {
     comparisons++;
-    if (item[key].includes(target)) {
-      return { result: item, comparisons };
+    if (item[key].toLowerCase().includes(target.toLowerCase())) {
+      result.push(item);
     }
   }
 
-  return { result: null, comparisons };
+  return { result, comparisons };
 }
 
 /**
@@ -290,7 +292,7 @@ app.delete('/transacoes/:id', (req, res) => {
 app.get('/transacoes/busca/:descricao', (req, res) => {
   const { descricao } = req.params;
 
-  const sql = 'SELECT * FROM descricao';
+  const sql = 'SELECT * FROM transacoes;';
 
   db.query(sql, (err, results) => {
     if (err) return res.status(500).json({ erro: err.message });
