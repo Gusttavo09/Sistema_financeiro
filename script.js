@@ -258,11 +258,6 @@ document.getElementById('pageSize').addEventListener('change', ()=>{ currentPage
 function setTodayDate(){ const hoje = new Date().toISOString().split('T')[0]; document.getElementById('data').value = hoje; }
 
 
-document.getElementById('themeToggle').addEventListener('click', ()=>{
-  document.body.classList.toggle('dark-mode');
-  document.getElementById('themeToggle').textContent = document.body.classList.contains('dark-mode')? '☀️':'🌙';
-});
-
 window.addEventListener('load', async ()=>{
   setTodayDate();
   const initialOrder = document.getElementById('sortBy').value;
