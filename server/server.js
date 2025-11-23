@@ -34,14 +34,7 @@ db.connect((err) => {
 /**
   QuickSort - Divisão e Conquista
  */
-
-//o orderBy vai ter o valor biggerValue, lowerValue, oldestDate, newestDate
-const ComparrisonMapper = {
-  'biggerValue': '>',
-  'lowerValue': '<',
-
-
-}
+// orderBy: 'biggerValue', 'lowerValue', 'newestDate', 'oldestDate'
 function quickSortValor(arr, orderBy) {
   if (arr.length <= 1) return arr;
 
@@ -74,113 +67,8 @@ function quickSortValor(arr, orderBy) {
   return [...quickSortValor(left, orderBy), pivot, ...quickSortValor(right, orderBy)];
 }
 
-/**
- MergeSort - Divisão e Conquista
- */
-function mergeSort(arr, key = 'media_notas') {
-  if (arr.length <= 1) return arr;
-
-  const mid = Math.floor(arr.length / 2);
-  const left = mergeSort(arr.slice(0, mid), key);
-  const right = mergeSort(arr.slice(mid), key);
-
-  return merge(left, right, key);
-}
-
-function merge(left, right, key) {
-  let result = [];
-  let i = 0, j = 0;
-
-  while (i < left.length && j < right.length) {
-    if ((left[i][key] || 0) >= (right[j][key] || 0)) {
-      result.push(left[i]);
-      i++;
-    } else {
-      result.push(right[j]);
-      j++;
-    }
-  }
-
-  return result.concat(left.slice(i)).concat(right.slice(j));
-}
-
-/**
- HeapSort
- */
-function heapSort(arr, key = 'media_notas') {
-  const sorted = [...arr];
-  const n = sorted.length;
-
-  for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
-    heapify(sorted, n, i, key);
-  }
-
-  for (let i = n - 1; i > 0; i--) {
-    [sorted[0], sorted[i]] = [sorted[i], sorted[0]];
-    heapify(sorted, i, 0, key);
-  }
-
-  return sorted.reverse();
-}
-
-function heapify(arr, n, i, key) {
-  let largest = i;
-  const left = 2 * i + 1;
-  const right = 2 * i + 2;
-
-  if (left < n && (arr[left][key] || 0) > (arr[largest][key] || 0)) largest = left;
-  if (right < n && (arr[right][key] || 0) > (arr[largest][key] || 0)) largest = right;
-
-  if (largest !== i) {
-    [arr[i], arr[largest]] = [arr[largest], arr[i]];
-    heapify(arr, n, largest, key);
-  }
-}
-
-/**
-  BubbleSort (para comparação de algoritmos simples)
- */
-function bubbleSort(arr, key = 'media_notas') {
-  const sorted = [...arr];
-  const n = sorted.length;
-
-  for (let i = 0; i < n - 1; i++) {
-    for (let j = 0; j < n - i - 1; j++) {
-      if ((sorted[j][key] || 0) < (sorted[j + 1][key] || 0)) {
-        [sorted[j], sorted[j + 1]] = [sorted[j + 1], sorted[j]];
-      }
-    }
-  }
-
-  return sorted;
-}
-
 // ALGORITMOS DE BUSCA 
 
-/**
- Busca Binária
- */
-function binarySearch(arr, target, key = 'matricula') {
-  let left = 0;
-  let right = arr.length - 1;
-  let comparisons = 0;
-
-  while (left <= right) {
-    comparisons++;
-    const mid = Math.floor((left + right) / 2);
-
-    if (arr[mid][key] === target) {
-      return { result: arr[mid], comparisons };
-    }
-    if (arr[mid][key] < target) {
-      left = mid + 1;
-    } else {
-      right = mid - 1;
-    }
-  }
-
-  return { result: null, comparisons };
-}
 
 /**
 Busca Linear
@@ -196,31 +84,6 @@ function linearSearch(arr, target, key = 'descricao') {
   }
 
   return { result, comparisons };
-}
-
-/**
- * Hash Table para busca O(1) amortizado
- */
-class HashTable {
-  constructor() {
-    this.table = new Map();
-  }
-
-  insert(key, value) {
-    this.table.set(key, value);
-  }
-
-  search(key) {
-    return this.table.get(key);
-  }
-
-  delete(key) {
-    return this.table.delete(key);
-  }
-
-  size() {
-    return this.table.size;
-  }
 }
 
 
