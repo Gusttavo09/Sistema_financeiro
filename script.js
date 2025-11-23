@@ -1,5 +1,5 @@
 // Frontend script for Controle Financeiro
-const API = "http://localhost:3000";
+const API = "https://gustavorenan-sistemafinanceiro-production.up.railway.app";
 
 let allTransacoes = [];
 let currentPage = 1;
