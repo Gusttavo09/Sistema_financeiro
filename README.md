@@ -9,7 +9,6 @@ Sistema web completo para gerenciamento de transações financeiras (entradas e 
 🔍 Busca Inteligente - Busca linear por nome de transação
 📈 Ordenação Avançada - QuickSort (valor) e MergeSort (data)
 🎯 Filtros Dinâmicos - Ordenar por valor/data + limitar resultados
-💾 Exportação CSV - Exporte suas transações filtradas
 
  Algoritmos Implementados
 QuickSort (Ordenação por Valor)
@@ -45,4 +44,5 @@ Este projeto foi desenvolvido como trabalho para a disciplina de Algoritmos e Es
 <p>✅ Técnicas de Divisão e Conquista</p>
 <p>✅ Recursão e equações de recorrência</p>
 <p>✅ Estruturas de dados eficientes</p>
+
 
