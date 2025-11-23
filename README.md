@@ -40,8 +40,9 @@ RESTful API
  Projeto Acadêmico
 Este projeto foi desenvolvido como trabalho para a disciplina de Algoritmos e Estruturas de Dados, com foco em:
 
-✅ Implementação de algoritmos clássicos
-✅ Análise de complexidade (Big O, Θ, Ω)
-✅ Técnicas de Divisão e Conquista
-✅ Recursão e equações de recorrência
-✅ Estruturas de dados eficientes
+<p>✅ Implementação de algoritmos clássicos</p>
+<p>✅ Análise de complexidade (Big O, Θ, Ω)</p>
+<p>✅ Técnicas de Divisão e Conquista</p>
+<p>✅ Recursão e equações de recorrência</p>
+<p>✅ Estruturas de dados eficientes</p>
+
