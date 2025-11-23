@@ -1,7 +1,7 @@
 {
-  "name": "sistema-academico",
+  "name": "sistema-financeiro",
   "version": "2.0.0",
-  "description": "Sistema de gestão acadêmica",
+  "description": "Sistema de gerenciamento financeiro desenvolvido com Node.js, Express e MySQL.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -18,10 +18,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Gusttavo09/Gerenciador-de-desempenho-academico.git"
+    "url": "git+https://github.com/Gusttavo09/Sistema_financeiro/tree/main"
   },
   "bugs": {
-    "url": "https://github.com/Gusttavo09/Gerenciador-de-desempenho-academico/issues"
+    "url": "https://github.com/Gusttavo09/Sistema_financeiro/tree/main"
   },
-  "homepage": "https://github.com/Gusttavo09/Gerenciador-de-desempenho-academico#readme"
+  "homepage": "https://github.com/Gusttavo09/Sistema_financeiro/tree/main#readme"
 }

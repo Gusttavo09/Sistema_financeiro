@@ -1,8 +1,3 @@
-/* ==================================================
-	 Styles for Controle Financeiro - clean & responsive
-	 ==================================================
-*/
-
 :root{
 	--bg: #f5f7fb;
 	--card: #ffffff;
@@ -42,7 +37,6 @@ body{
 .form-panel{position:relative}
 .form-panel h2{margin:0 0 12px 0;color:#0b2756}
 
-/* Metrics dashboard styles */
 .metrics-panel{margin-bottom:18px}
 .metrics-grid{display:flex;gap:18px;align-items:stretch}
 .metric-card{flex:1;padding:14px;border-radius:10px;background:linear-gradient(180deg,#ffffff,#fbfdff);box-shadow:0 6px 22px rgba(10,20,60,0.04)}
@@ -85,7 +79,6 @@ body{
 .btn-ghost{background:#ffffff;border:1px solid #e6edf6;color:#12306b}
 .icon-btn{background:transparent;border:1px solid #e6edf6;padding:8px;border-radius:10px}
 
-/* List panel */
 .list-controls{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px}
 .left-controls input{padding:10px;border-radius:10px;border:1px solid #e8eef9;width:260px}
 .right-controls{display:flex;align-items:center;gap:8px}
@@ -111,18 +104,15 @@ tbody tr:hover{background:#fbfdff}
 .page-btn{padding:8px 12px;border-radius:8px;border:1px solid #e8eef9;background:transparent;cursor:pointer}
 .page-btn.active{background:var(--accent);color:white;border-color:var(--accent)}
 
-/* Modal */
 .modal{position:fixed;inset:0;background:rgba(7,10,20,0.45);display:flex;align-items:center;justify-content:center;padding:20px}
 .modal.hidden{display:none}
 .modal-content{background:var(--card);padding:18px;border-radius:12px;min-width:320px;max-width:520px;box-shadow:var(--shadow)}
 
-/* Responsive */
 @media (max-width:1000px){
 	.main-grid{grid-template-columns:1fr}
 	.left-controls input{width:100%}
 }
 
-/* Dark mode support */
 body.dark-mode{background:linear-gradient(180deg,#0f172a 0%,#071233 100%);color:#e6eef9}
 body.dark-mode .panel{background:#0b1b3a;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
 body.dark-mode .logo{color:#9cc0ff}

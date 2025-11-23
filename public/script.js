@@ -85,7 +85,6 @@ function renderPagination(totalPages){
 
 function goPage(n){ currentPage = n; renderTable(); }
 
-// Create
 document.getElementById('formTransacao').addEventListener('submit', async (e)=>{
   e.preventDefault();
   const descricao = document.getElementById('descricao').value.trim();
@@ -109,7 +108,6 @@ document.getElementById('formTransacao').addEventListener('submit', async (e)=>{
 
 document.getElementById('resetForm').addEventListener('click', ()=>{ document.getElementById('formTransacao').reset(); setTodayDate(); });
 
-// Delete
 async function deleteTransacao(id){
   if(!confirm('Deseja realmente excluir essa transação?')) return;
   try{
@@ -121,9 +119,9 @@ async function deleteTransacao(id){
   }catch(err){console.error(err); showAlert('Erro ao excluir','error')}
 }
 
-// Edit modal
+
 async function openEdit(id){
-  // try to get fresh item from server
+  
   try{
     const res = await fetch(`${API}/transacoes/${id}`);
     if(!res.ok) throw new Error('Não encontrado');
@@ -165,7 +163,6 @@ document.getElementById('formEdit').addEventListener('submit', async (e)=>{
   }catch(err){console.error(err); showAlert('Erro ao atualizar','error')}
 });
 
-// Search behavior: use server-side search (debounced) with client-side fallback
 let _searchDebounceTimer = null;
 async function performServerSearch(q){
   if(!q) return fetchTransacoes(document.getElementById('sortBy').value);
@@ -183,13 +180,13 @@ async function performServerSearch(q){
   }catch(err){
     console.error(err);
     showAlert('Busca por servidor falhou — usando filtro local','error');
-    // fallback to client-side filtering
+    
     currentPage = 1;
     renderTable();
   }
 }
 
-// Debounced input: call server after short pause while typing
+
 document.getElementById('search').addEventListener('input', (e)=>{
   const q = e.target.value.trim();
   currentPage = 1;
@@ -197,7 +194,7 @@ document.getElementById('search').addEventListener('input', (e)=>{
   _searchDebounceTimer = setTimeout(()=> performServerSearch(q), 350);
 });
 
-// Enter key triggers immediate server search (no debounce)
+
 document.getElementById('search').addEventListener('keydown', async (e)=>{
   if(e.key === 'Enter'){
     e.preventDefault();
@@ -208,9 +205,9 @@ document.getElementById('search').addEventListener('keydown', async (e)=>{
 });
 
 
-// --- Dashboard metrics ---
+// --- Dashboard ---
 function updateMetrics(){
-  // calculate total entradas, saidas and per-category expenses
+  // Calculo medio
   let entradas = 0;
   let saidas = 0;
   const catMap = new Map();
@@ -225,7 +222,6 @@ function updateMetrics(){
     }
   }
 
-  // update DOM values
   const elEntr = document.getElementById('bal-entradas');
   const elSaid = document.getElementById('bal-saidas');
   const elSaldo = document.getElementById('bal-saldo');
@@ -233,10 +229,10 @@ function updateMetrics(){
   if(elSaid) elSaid.textContent = formatCurrency(saidas);
   if(elSaldo) elSaldo.textContent = formatCurrency(entradas - saidas);
 
-  // build category list (expenses only)
+
   const catEl = document.getElementById('categoryList');
   if(!catEl) return;
-  // sort categories by value desc
+
   const cats = Array.from(catMap.entries()).sort((a,b)=> b[1]-a[1]);
   const totalDespesas = saidas || 0;
   if(cats.length === 0){
@@ -256,26 +252,24 @@ function updateMetrics(){
   }).join('');
 }
 
-// Sort + pageSize controls
 document.getElementById('sortBy').addEventListener('change', async (e)=>{ currentPage=1; await fetchTransacoes(e.target.value); });
 document.getElementById('pageSize').addEventListener('change', ()=>{ currentPage=1; renderTable(); });
 
 function setTodayDate(){ const hoje = new Date().toISOString().split('T')[0]; document.getElementById('data').value = hoje; }
 
-// Theme toggle
+
 document.getElementById('themeToggle').addEventListener('click', ()=>{
   document.body.classList.toggle('dark-mode');
   document.getElementById('themeToggle').textContent = document.body.classList.contains('dark-mode')? '☀️':'🌙';
 });
 
-// init
 window.addEventListener('load', async ()=>{
   setTodayDate();
   const initialOrder = document.getElementById('sortBy').value;
   await fetchTransacoes(initialOrder);
 });
 
-// expose some functions to global (used in inline onclick)
+
 window.openEdit = openEdit;
 window.deleteTransacao = deleteTransacao;
 window.goPage = goPage;
