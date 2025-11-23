@@ -34,7 +34,7 @@ db.connect((err) => {
 /**
   QuickSort - Divisão e Conquista
  */
-// orderBy: 'biggerValue', 'lowerValue', 'newestDate', 'oldestDate'
+
 function quickSortValor(arr, orderBy) {
   if (arr.length <= 1) return arr;
 
