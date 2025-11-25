@@ -1,5 +1,5 @@
 const express = require('express');
-const mysql = require('mysql2');
+
 const cors = require('cors');
 require('dotenv').config();
 
@@ -13,7 +13,9 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // CONEXÃO COM BANCO 
-const pool = mysql.createPool({
+console.log(process.env.DATABASE_PORT, process.env.DATABASE_HOST, process.env.DATABASE_USER, process.env.DATABASE_PASS, process.env.DATABASE_NAME)
+const mysql = require('mysql2');
+const db = mysql.createPool({
   connectionLimit: 10,
   port: process.env.DATABASE_PORT,
   host: process.env.DATABASE_HOST,
@@ -22,7 +24,7 @@ const pool = mysql.createPool({
   database: process.env.DATABASE_NAME,
 });
 
-pool.getConnection((err, connection) => {
+db.getConnection((err, connection) => {
   if (err) {
     console.error('Erro ao conectar ao MySQL no pool:', err);
     return;
