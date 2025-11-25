@@ -11,15 +11,12 @@ Sistema web completo para gerenciamento de transações financeiras (entradas e 
 🎯 Filtros Dinâmicos - Ordenar por valor/data + limitar resultados
 
  Algoritmos Implementados
-QuickSort (Ordenação por Valor)
-javascriptComplexidade: O(n log n) médio | O(n²) pior caso
-Técnica: Divisão e Conquista
-MergeSort (Ordenação por Data)
-javascriptComplexidade: O(n log n) garantido
-Técnica: Divisão e Conquista
-Busca Linear (Busca por Nome)
-javascriptComplexidade: O(n)
-Suporta: Busca por substring
+<p>QuickSort (Ordenação por Valor)</p>
+<p>javascriptComplexidade: O(n log n) médio | O(n²) pior caso</p>
+<p>Técnica: Divisão e Conquista</p>
+
+<p>javascriptComplexidade: O(n)</p>
+<p>Suporta: Busca por substring</p>
 
 💡 Todos os algoritmos implementados do zero, sem bibliotecas externas!
 
@@ -44,5 +41,6 @@ Este projeto foi desenvolvido como trabalho para a disciplina de Algoritmos e Es
 <p>✅ Técnicas de Divisão e Conquista</p>
 <p>✅ Recursão e equações de recorrência</p>
 <p>✅ Estruturas de dados eficientes</p>
+
 
 
