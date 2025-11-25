@@ -13,20 +13,22 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // CONEXÃO COM BANCO 
-const db = mysql.createConnection({
-  port: process.env.DATABSE_PORT,
+const pool = mysql.createPool({
+  connectionLimit: 10,
+  port: process.env.DATABASE_PORT,
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASS,
   database: process.env.DATABASE_NAME,
 });
 
-db.connect((err) => {
+pool.getConnection((err, connection) => {
   if (err) {
-    console.error('❌ Erro ao conectar ao MySQL:', err.message);
-    process.exit(1);
+    console.error('Erro ao conectar ao MySQL no pool:', err);
+    return;
   }
-  console.log('✅ Conectado ao MySQL!');
+  console.log('Conectado ao MySQL pelo pool!');
+  connection.release(); // libera a conexão para o pool
 });
 
 // ALGORITMOS DE ORDENAÇÃO 
